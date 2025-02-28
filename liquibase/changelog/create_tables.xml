@@ -1,0 +1,95 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="1" author="admin">
+        <!-- Create company_table -->
+        <createTable tableName="company_table">
+            <column name="id_company" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Create model_table -->
+        <createTable tableName="model_table">
+            <column name="id_model" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_company" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_model_company" references="company_table(id_company)"/>
+            </column>
+            <column name="name" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Create characteristics_table -->
+        <createTable tableName="characteristics_table">
+            <column name="id_model" type="bigint">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_characteristics_model" references="model_table(id_model)"/>
+            </column>
+            <column name="weight" type="real">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ram" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="front_camera" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="back_camera" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="processor" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="battery_capacity" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="screen_size" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Create region_table -->
+        <createTable tableName="region_table">
+            <column name="id_region" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Create price_table -->
+        <createTable tableName="price_table">
+            <column name="id_price" type="real">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_model" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_price_model" references="model_table(id_model)"/>
+            </column>
+            <column name="id_region" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_price_region" references="region_table(id_region)"/>
+            </column>
+            <column name="start_price" type="real">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Create start_year_table -->
+        <createTable tableName="start_year_table">
+            <column name="id_model" type="bigint">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_start_year_model" references="model_table(id_model)"/>
+            </column>
+            <column name="start_year" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

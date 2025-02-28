@@ -1,0 +1,4 @@
+.venv
+.vscode
+pgadmin
+postgres_data
