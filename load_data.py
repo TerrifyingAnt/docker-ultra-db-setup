@@ -16,7 +16,7 @@ def connect_to_db():
 def load_csv(file_path):
     try:
         # Попробуем прочитать как CSV
-        df = pd.read_csv(file_path, encoding='utf-8')
+        df = pd.read_excel(file_path, encoding="UTF-8")
     except UnicodeDecodeError:
         # Если возникла ошибка кодировки, попробуем другую кодировку
         df = pd.read_csv(file_path, encoding='latin1')
@@ -101,7 +101,7 @@ def insert_start_years(cursor, years):
 # Основная функция для загрузки данных
 def main(csv_file):
     # Загрузка данных из CSV
-    df = load_csv(csv_file)
+    df = load_csv(csv_file, )
 
     # Проверяем наличие нужных столбцов
     required_columns = {'company name', 'model name', 'mobile weight', 'ram', 'front camera', 
@@ -165,7 +165,7 @@ def main(csv_file):
                 'id_price': f"{i + 1}",
                 'id_model': i + 1,
                 'id_region': region_map[region_name],
-                'start_price': float(price.replace("¥", "").replace("Not available", "0"))
+                'start_price': float(price.replace("¥", "").replace("�", "").replace("Not available", "0"))
             })
 
     # Создание годов выпуска
@@ -192,5 +192,5 @@ def main(csv_file):
 
 
 if __name__ == "__main__":
-    csv_file = "Mobiles Dataset (2025).csv"  # Укажите путь к вашему CSV-файлу
+    csv_file = "Mobiles Dataset (2025).xlsx"  # Укажите путь к вашему CSV-файлу
     main(csv_file)
